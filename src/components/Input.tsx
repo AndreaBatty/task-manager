@@ -1,19 +1,23 @@
 import { forwardRef, type InputHTMLAttributes } from "react";
 
 type InputProps = {
-  label: string
+  label?: string
   error?: string
   className?: string
+  wrapperClassName?: string
   id: string
 } & InputHTMLAttributes<HTMLInputElement>
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className = "", id, ...props }, ref) => {
+  ({ label, error, className = "", id, wrapperClassName, ...props }, ref) => {
     return (
-      <div className="mb-4">
-        <label htmlFor={id} className="block mb-1 text-sm font-medium">
+      <div className={wrapperClassName}>
+        {label && (
+          <label htmlFor={id} className="block mb-1 text-sm font-medium">
           {label}
         </label>
+        )}
+        
         <input
           id={id}
           ref={ref} // 👈 RHF userà questo per collegare l'input

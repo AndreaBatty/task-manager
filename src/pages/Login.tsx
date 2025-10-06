@@ -38,6 +38,7 @@ const Login = () => {
         <div>
           <Input
             id="email"
+            wrapperClassName="mb-4"
             label="Email"
             type="email"
             placeholder="Inserisci la tua email"
@@ -53,6 +54,7 @@ const Login = () => {
 
           <Input
             id="password"
+            wrapperClassName="mb-4"
             label="Password"
             type="password"
             placeholder="Inserisci la password"

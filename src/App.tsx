@@ -6,6 +6,7 @@ import Navbar, { type NavbarItem } from "./components/Navbar";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import { useAppSelector } from "./store/hooks";
+import Tasks from "./pages/Tasks";
 
 
 
@@ -17,6 +18,7 @@ function App() {
     { link: "/", label: "Home" },
     { link: "/login", label: "Login", isVisible: !isAuthenticated },
     { link: "/dashboard", label: "Dashboard", isVisible: isAuthenticated },
+    { link: "/tasks", label: "Tasks", isVisible: isAuthenticated }
   ]
 
   return (
@@ -27,6 +29,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/tasks" element={<Tasks />} />
         </Routes>
       </div>
     </>
