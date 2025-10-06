@@ -1,10 +1,14 @@
 import { NavLink } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import Button from "./Button";
+import { useDispatch } from "react-redux";
 import { logout } from "../store/authSlice";
+import { useAppSelector } from "../store/hooks";
+
 
 export type NavbarItem = {
   link: string;
   label: string;
+  isVisible?: boolean;
 };
 
 type NavbarProps = {
@@ -13,9 +17,10 @@ type NavbarProps = {
 
 const Navbar = ({ items }: NavbarProps) => {
 
-  const dispatch = useAppDispatch()
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
-  const user = useAppSelector((state) => state.auth.user)
+
+  const dispatch = useDispatch();
+
   return (
     <nav className="bg-gray-900 text-white px-6 py-3 flex justify-between items-center">
       {/* Logo */}
@@ -23,10 +28,10 @@ const Navbar = ({ items }: NavbarProps) => {
         TaskManager
       </NavLink>
 
-      {/* Links */}
       <div className="space-x-4">
-        {!isAuthenticated ? (
-          items.map((item) => (
+        {
+          items.filter((item) => item.isVisible !== false)
+          .map((item) => (
             <NavLink
               key={item.link}
               to={item.link}
@@ -37,17 +42,9 @@ const Navbar = ({ items }: NavbarProps) => {
               {item.label}
             </NavLink>
           ))
-        ) : (
-          <>
-            <span className="italic">Ciao, {user?.email}</span>
-            <button
-              onClick={() => dispatch(logout())}
-              className="hover:text-red-400 ml-4"
-            >
-              Logout
-            </button>
-          </>
-        )}
+        }
+        { isAuthenticated && <Button children="Logout" onClick={() => dispatch(logout())} />}
+        
       </div>
     </nav>
   );
